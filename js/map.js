@@ -92,27 +92,21 @@ var createPopUp = function (j, ads){
 
 };
 
-var createMapPin = function (k, ad) {
-  var cardTemplate = document.querySelector('map__card');
-  console.log(cardTemplate);
-  var pinTemplate = cardTemplate.querySelector('.map__pin');
+var createMapPin = function (ad) {
+  var cardTemplate = document.querySelector('#templ');
+  var pinTemplate = cardTemplate.content.querySelector('.map__pin');
   console.log(pinTemplate);
-  var pin = makeElement('button', 'map__pin');
-  pin.style.left = '' + ad.location.x + 40 + 'px';
-  pin.style.top = '' + ad.location.y - 20 + 'px';
-  pin.src = ad.avatar;
-  pin.alt = ad.title;
-  pinTemplate.appendChild(pin);
-  var pinImage = makeElement('img');
+  pinTemplate = pinTemplate.cloneNode(true);
+  var pinImage = pinTemplate.querySelector('img');
+  console.log(pinImage);
+  pinTemplate.style.left = '' + ad.location.x - 40 / 2 + 'px';
+  pinTemplate.style.top = '' + ad.location.y - 40 + 'px';
   pinImage.src = ad.avatar;
-  pinImage.width = 40;
-  pinImage.height = 40;
-  pinImage.draggable = false;
-  pinImage.alt = 'Метка объявления';
-  pinTemplate.appendChild(pinImage);
-
+  return pinTemplate;
 };
 
 for (i = 0; i < 8; i++) {
-  createMapPin(i, advertisments);
+  var element = createMapPin(advertisments[i]);
+  var map = document.querySelector('.map__pins');
+  map.appendChild(element);
 }
